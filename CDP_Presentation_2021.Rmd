@@ -1,0 +1,2236 @@
+---
+title: 'Capstone Project'
+author: 'Ebtesam AlAmri'
+date: '11/16/2021'
+css: cssfile.css
+output:
+ revealjs::revealjs_presentation:
+    transition: slide
+    background_transition: fade
+    theme: night
+    left: true
+    fig_caption: true
+    self_contained: false
+    reveal_plugins: ["menu"]
+    reveal_options:
+      menu:
+        side: left
+      
+        
+
+---   
+<style type="text/css">
+
+h1 {
+  text-align:left;
+font-family: "Times New Roman", Times, serif !important;
+font-size: 8px;
+
+}
+h2 {
+  text-align:left;
+  font-family: "Times New Roman", Times, serif !important;
+  font-size: 5px;
+}
+
+h3 {
+  text-align:left;
+  font-family: "Times New Roman", Times, serif !important;
+  
+}
+
+p{text-align:left;
+font-family: "Times New Roman", Times, serif !important;}
+.p1{text-align:left;}
+.p2{text-align:left;}
+.p3{text-align:left;}
+
+
+
+.reveal {
+font-family: "Times New Roman", Times, serif !important;
+}
+.reveal section img { background:none; border:none; box-shadow:none; }
+
+
+reactable_html <- function(id, style, class, ...) {
+  if (isTRUE(getOption("rstudio.notebook.executing"))) {
+    style <- paste0("color: #333;", style)
+  }
+  htmltools::tagList(
+    reactR::html_dependency_corejs(),
+    reactR::html_dependency_react(),
+    reactR::html_dependency_reacttools(),
+    htmltools::tags$div(id = id, class = class, style = style)
+    
+    
+    
+   
+</style> 
+
+  
+
+```{css, echo=FALSE}
+.codecolor {
+color:#d8bfd8;
+font-style: bold;    
+}
+```
+
+```{r setup, include=FALSE, cache= FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<header>
+<h1></h1>
+<span>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+```{r ,out.width = "70px",out.height="80px",echo=FALSE}
+knitr::include_graphics("C:/Users/Esama/Documents/Project/misk2.png")
+```
+</span>
+</header>
+```{r ,out.width = "900px",out.height="400px",echo=FALSE}
+knitr::include_graphics("C:/Users/Esama/Documents/Project/gif9.gif")
+```
+<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Misk Datascience Immersive Course<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;2021
+
+
+
+# *1.The Carbon Disclosure Project*
+<br>
+<p style="text-align: left;">
+The datasets are taken from an international non-profit organization CPD(Carbon Disclosure Project), it uses inventories which are a database that lists, by source, the amount of air pollutants discharged into the atmosphere during a year or other time period, it follows the standards and protocol of GPC(Global Protocol for Community-Scale Greenhouse Gas Emission Inventories) to calculate the emissions and their related sources <br> in cities around the world. (https://www.macfound.org) 
+</p>
+<figure>
+```{r ,out.width = "300px",out.height="100px",echo=FALSE}
+knitr::include_graphics("C:/Users/Esama/Documents/Project/cdplogo.png")
+```
+<figcaption align = "center"><b>CDP Logo</b></figcaption>
+</figure>
+
+## *1.1 The Greenhouse*
+
+What is a Greenhouse?
+
+The greenhouse effect is a natural process that warms the Earth's surface. When the Sun's energy reaches the Earth's atmosphere, some of it is reflected back to space and some is absorbed and re-radiated by greenhouse gases. ... The absorbed energy warms the atmosphere and the surface of the Earth.(https://www.awe.gov.au/)
+<figure>
+
+```{r ,out.width = "400px",out.height="300px",echo=FALSE}
+knitr::include_graphics("C:/Users/Esama/Documents/Project/greenhouse.jpg")
+```
+<figcaption align = "center"><b>Greenhouse Effect</b></figcaption>
+</figure>
+
+## *1.2 Carbon Dioxide Equivalent*
+<br>
+
+:::{.element: class="fragment fade-up"}
+What is CO2<sub>e</sub> ?
+:::
+
+
+
+:::{.element: class="fragment fade-up"}
+Carbon Dioxide Equivalent, is a term for describing different greenhouse gases in a common unit. For any quantity and type of greenhouse gas including CO2.
+:::
+
+<br>
+
+:::{.element: class="fragment fade-up"}
+What is the metric of  CO2<sub>e</sub> *tonne* ?
+:::
+
+:::{.element: class="fragment fade-up"}
+The metric CO2<sub>e</sub> *tonne* is literally meaning calculating CO2<sub>e</sub> emissions in the atmosphere in tone which is 1000 *kg* of gas.A gallon of CO2<sub>e</sub> which is 3.79 *kg* is as light in weight as AAA battery!
+
+:::
+
+## *1.3 GHG Scopes Protocol*
+<br>
+
+:::{.element: class="fragment fade-up"}
+Scope 1:
+
+Emissions are direct emissions from owned or controlled sources.
+:::
+
+:::{.element: class="fragment fade-up"}
+Scope 2:
+
+Emissions are indirect emissions from the generation of purchased energy.
+
+:::
+
+:::{.element: class="fragment fade-up"}
+Scope 3:
+
+Emissions are all indirect emissions (not included in 
+Scope 2) that occur in the value chain of the reporting company, including both upstream and downstream 
+emissions.(https://ghgprotocol.org)
+:::
+
+:::{.element: class="fragment fade-up"}
+What we're looking for in this data :<br>
+*If population has any relation to the increase of the emissions.*<br>
+*If city has increased or decreased by the years their number of emissions.*
+:::
+
+## *1.4 Data Dictionary*
+
+
+
+
+
+```{r, echo=FALSE, layout="l-body-outset",max.print=34,rows.print=9,cols.print=3}
+library(rmarkdown)
+library(kableExtra)
+Datadic<-read.csv('C:/Users/Esama/Documents/Project/Data Dictionary-CPD.csv')
+Datadic1<-data.frame(Datadic)
+paged_table(Datadic1)
+
+```
+
+## *1.5 The Dataset*
+```{r, echo=FALSE, layout="l-body-outset",rows.print=12,cols.print=4}
+library(rmarkdown)
+library(kableExtra)
+CDPsample<-read.csv('C:/Users/Esama/Documents/Project/CDPsample.csv')
+CDPsample<-data.frame(CDPsample)
+paged_table(CDPsample)
+```
+*(sample of 100 rows)* 
+
+
+
+# *2.Exploratory Data Analysis*
+
+In this section we're going to explore the data
+in the following steps:
+
+:::{.element: class="fragment fade-up"}
+
+1-Clean our data:<br>
+
+-Visualize the null values of our Dataset. <br>
+-Replacing null values.<br>
+-Replace any other typos that seem to 
+be exist in our data.
+
+:::
+
+<br>
+
+:::{.element: class="fragment fade-up"}
+
+2-Analyze our Dataset:
+
+-Descriptive statistics (Mean, Max, Min, Std..etc)<br>
+-Creating an inferential statistics.<br>
+-Checking for correlation between variables.
+:::
+
+
+
+:::{.element: class="fragment fade-up"}
+
+3-Data Visualization
+
+:::
+
+## *2.1 Data Munging:Null Visualization*
+
+
+```{r, echo=FALSE,message=FALSE, warning=FALSE, out.width='900px'}
+library(plotly)
+library(ggplot2)
+m <- list(
+  r=50,
+  b=300,
+  t=60,
+  l=50,
+  pad=0
+)
+CDP<-read.csv('C:/Users/Esama/Documents/Project/CDP.csv')
+colwise<-sapply(CDP, function(x) sum(is.na(x)))
+plot_ly(CDP, x=colnames(CDP),y=colwise, color=colwise, colors='BuPu',type='bar') %>%
+  layout(font=list(color='#ffffff'),title= "Number of Null Values in Columns",
+         yaxis=list(title = "Null Values", range = c(0,2500),color = '#ffffff', gridcolor='#ffffff'),xaxis=list(color = '#ffffff'),paper_bgcolor='#000000',  plot_bgcolor="#000000", margin=m)%>% colorbar(title = "Scale", outlinecolor='#000000')
+
+```
+
+## *2.1.1 Data Munging:Null Summary*
+
+<br>
+<br>
+Summary of Null Values:
+
+
+```{r, echo=FALSE, message=FALSE, fig.align='left'}
+library(tidyverse)
+CDP<-read.csv('C:/Users/Esama/Documents/Project/CDP.csv')
+colwise<-sapply(CDP, function(x) sum(is.na(x)))
+summary(colwise)
+
+```
+
+
+
+Column of Max Null Values:
+
+```{r, echo=FALSE, message=FALSE , warning=FALSE, fig.align='left'}
+library(pander)
+Nullvalues<-read.csv('C:/Users/Esama/Documents/Project/nullvaluescdp.csv')
+output=Nullvalues[which.max(Nullvalues$Number_of_Nulls),]
+row.names(output)<-NULL
+pandoc.table(output,justify='left')
+
+```
+
+
+
+Column of Minimum Null Values:
+
+
+```{r, echo=FALSE, fig.align='left', message=FALSE}
+library(pander)
+Nullvalues<-read.csv('C:/Users/Esama/Documents/Project/nullvaluescdp.csv')
+Nullvalues<-data.frame(Nullvalues)
+output<-Nullvalues[14,]
+row.names(output)<-NULL
+pandoc.table(output,justify='left')
+```
+
+
+## *2.1.2 Data Munging: Handling Nulls*
+<font size=5>
+There are two ways to handle Null values in a dataset:
+
+
+1-Categorical Variable. 
+
+For the purpose of this section "EDA", we're going <br> to replace
+the categorical variable
+with "Unknown".<br>
+As below:
+
+</font>
+<font size='6'>
+```{r,inclue=TRUE,echo=TRUE,eval=FALSE, highlight=FALSE, class.source='.codecolor'}
+CDP$Reporting.Authority[is.na(CDP$Reporting.Authority)] = 'Unknown'
+CDP$Administrative.city.boundary[is.na(CDP$Administrative.city.boundary)] = 'Unknown'
+CDP$Primary.Protocol.Comment[is.na(CDP$Primary.Protocol.Comment)] = 'Unknown'
+CDP$Common.Reporting.Framework.inventory.format..GPC.[is.na(CDP$Common.Reporting.Framework.inventory.format..GPC.)] = 'Unknown'
+```
+</font>
+
+<font size=5>
+2-Continuous Variable.
+
+Now for the rest of continuous variables.all <br>
+replaced with zero.
+</font>
+<font size='6'>
+```{r,inclue=TRUE,echo=TRUE,eval=FALSE, class.source='.codecolor',highlight=FALSE}
+CDP[is.na(CDP)] = 0
+```
+</font>
+
+<font size='5'>
+
+##  *2.1.3 Data Munging: Replacing Typos*
+
+Since this dataset is reported from international organizations, some characters are written in their original language format and with exchanging the csv file which wasn't UTF-8 at some point, the characters have lost its format and replace by some punctuation which we need to replace it by a blank space!
+
+
+:::{.element: class="fragment fade-up"}
+How to know that out of 2579 rows
+that there<br> are some weird values?
+:::
+
+:::{.element: class="fragment fade-up"}
+Using this trick could make it easier for us to detect <br> and replace the values:
+:::
+
+
+:::{.element: class="fragment fade-up"}
+<font size='6'>
+```{r,inclue=TRUE,echo=TRUE,eval=FALSE, class.source='.codecolor',highlight=FALSE}
+Uniquevalues <- lapply(CDP, unique)
+```
+</font>
+:::
+
+:::{.element: class="fragment fade-up"}
+Here to replace all punctuation using Python:
+:::
+
+:::{.element: class="fragment fade-up"}
+<font size='6'>
+```{python ,inclue=TRUE,echo=TRUE,eval=FALSE, class.source='.codecolor',highlight=FALSE}
+import pandas as pd
+def remove_punctuation(x):
+    try:
+        x = x.str.replace('[^\w\s]','')
+    except:
+        pass
+    return x
+df1.apply(remove_punctuation)
+```
+</font>
+:::
+
+:::{.element: class="fragment fade-up"}
+<font size='6'>
+```{r,inclue=TRUE,echo=TRUE,eval=FALSE, class.source='.codecolor',highlight=FALSE}
+'Before:    Jo?œo Pessoa'
+'After:     Jo œo Pessoa'
+
+'For Blank City Names'
+'CPD$City <- ifelse(CDP$City == "", CDP$Organization, CDP$Organization)'
+```
+</font>
+:::
+
+</font>
+
+<font size='5'>
+
+## *2.2 Data Analysis:Descriptive Statistics*
+
+<font size='4'>
+Here's a summary of total emission by City:
+
+
+<font size='5'>
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE}
+CDP<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDP<-subset(CDP, CDP$TOTAL_Scope_1_2_3!=0.00 & CDP_Region=='North America')
+Summary<-CDP %>%
+          group_by(City)%>%
+          summarise(Mean=mean(TOTAL_Scope_1_2_3),
+                    Median=median(TOTAL_Scope_1_2_3),
+                    Mode=mode(TOTAL_Scope_1_2_3),
+                    Std=sd(TOTAL_Scope_1_2_3),
+                    Max=max(TOTAL_Scope_1_2_3),
+                    Min=min(TOTAL_Scope_1_2_3),
+                  
+                      Range=(Max-Min))
+    head(Summary, n=10)
+```
+
+<font size='4'>
+What we can conclude from this data:
+
+1-There's no mode.<br>
+Because the data gather for each city is still small, so there's <br> no repeating values.
+
+2-The Mean and Median either the same or the median is zero.<br>
+Some cities reported only once or did not report in other years thus their median is zero.
+
+3-The Standard Deviation either Null or very large.<br>
+In CDP some cities did not report at all to their inventories thus they have NULL values in their standard deviation.<br> The large standard deviation is an indication that the values are very small and they are not by nature frequent!
+
+</font>
+</font>
+</font>
+</font>
+
+
+## *2.2.1 Data Analysis: Distribution*
+
+
+
+<div style = "float: left">
+<font size='5'>
+Histogram plot of the data:
+```{r,echo=FALSE, warning=FALSE, message=FALSE, out.width='600px', out.height='400px'}
+CDP<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDP<-subset(CDP,CDP$Year_Reported=='2019'& CDP$TOTAL_Scope_1_2_3!=0.00)
+scopes<-CDP %>%
+  group_by(Year_Reported,CDP_Region)%>%
+  summarise(Scope1=sum(Direct_emissions_1+Direct_emissions_2+TOTAL_Scope_1),
+            Scope2=sum(Indirect_emissions_1+TOTAL_Scope_2),Scope3=sum(Indirect_emissions_2+TOTAL_Scope_3),Outside=sum(Emissions_occurring_outside_1+Emissions_occurring_outside_2),Population=sum(Population))
+x=scopes$Scope1
+fit<-density(scopes$Scope1)
+#scopes$CDP_Region <- as.factor(scopes$CDP_Region)
+plot_ly(scopes,x=x,name='Scope1',colors='RdYlGn',type='histogram',marker = list(opacity=1,color = '#563FF4')) %>%
+   add_trace(x=fit$x,y=fit$y ,type='scatter', mode = "lines", fill = "tozeroy", yaxis = "y2", name = "Density")%>%
+  layout(font=list(color='#ffffff'),title= "Data Distribution",
+         yaxis=list(color = '#ffffff', gridcolor='#000000'),xaxis=list(color = '#ffffff'),paper_bgcolor='#000000',  plot_bgcolor="#000000")
+                
+                              
+
+```
+
+
+We can clearly see that the data is positively skewed
+where the mean tend to be <br> higher than the median. 
+Taking into account that many cities did not report<br> their data!
+
+
+</div>
+</font>
+
+
+
+## *2.3 Data Analysis: Inferential Statistics*
+
+<font size='5'>
+In this section we'd like to know if the Population does increase with the total number of emissions per city.Although our data doesn't represent a normal distribution 
+where we can predict the relation between two variables.We're going to attempt to try and run linear regression model for the two variables.
+
+
+
+
+:::{.element: class="fragment fade-up"}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, class.source='.codecolor', highlight=FALSE}
+
+CDP<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDP<-subset(CDP, CDP$TOTAL_Scope_1_2_3!=0.00 )   
+CDPlm=lm(TOTAL_Scope_1_2_3~Population, data = CDP)
+summary(CDPlm)  
+
+```
+:::
+
+:::{.element: class="fragment fade-up"}
+*There's a significant relationship between the <br> population and number of emissions!*
+:::
+</font>
+
+
+
+## *2.4 Data Analysis: Correlation Map*
+
+
+
+
+<div style = "float: left">
+```{r, message=FALSE, warning=FALSE, echo=FALSE, out.width='3000px', out.height='500px'}
+
+par(bg='black')   
+
+library(corrplot)
+
+
+
+
+CDP<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDPcor<-CDP %>%
+  select(c(17, 18, 19,20,21,22,23,24,25,26,27,31))
+
+
+
+
+
+p<-corrplot(cor(CDPcor[c("Direct_emissions_1","Direct_emissions_2","Indirect_emissions_1" ,"Indirect_emissions_2" ,        
+                      "Emissions_occurring_outside_1" ,"Emissions_occurring_outside_2","TOTAL_Scope_1","TOTAL_Scope_2",               
+                      "TOTAL_Scope_3","TOTAL_Scope_1_2","TOTAL_Scope_1_2_3","Population")]), 
+         order='AOE',tl.col = "white",bg = "black", number.cex = 0.80,tl.cex=0.55,col = COL1('Purples'),addCoef.col = 'white')
+         
+
+           
+              
+              
+
+```
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# *3.Data Visualization: 2019 Emissions*
+
+<div style = "float: left">
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='700px', out.height='500px'}
+CDP<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDP<-subset(CDP,CDP$Year_Reported=='2019'& CDP$TOTAL_Scope_1_2_3!=0.00)
+scopes<-CDP %>%
+  group_by(Year_Reported,CDP_Region)%>%
+  summarise(Scope1=sum(Direct_emissions_1+Direct_emissions_2+TOTAL_Scope_1),
+            Scope2=sum(Indirect_emissions_1+TOTAL_Scope_2),Scope3=sum(Indirect_emissions_2+TOTAL_Scope_3),Outside=sum(Emissions_occurring_outside_1+Emissions_occurring_outside_2),Population=sum(Population))
+
+
+#scopes$CDP_Region <- as.factor(scopes$CDP_Region)
+plot_ly(scopes,x=scopes$CDP_Region,y=scopes$Scope1,name='Scope1',type='bar',marker = list(opacity=1,color = '#563FF4'))%>%
+  add_trace(y = ~Scope2,name='Scope2',marker = list(opacity=0.8,color = 'orange')) %>%
+  add_trace(y = ~Scope3,name='Scope3',marker = list(opacity=0.8,color = 'white')) %>%
+  layout(barmode='stack',font=list(color='#ffffff'),title= "Scope Emissions per Region 2019",
+         yaxis=list(title = "Emissions in tonne",color = '#ffffff', gridcolor='#000000'),xaxis=list(color = '#ffffff'),paper_bgcolor='#000000',  plot_bgcolor="#000000")
+                
+
+```
+</div>
+
+
+<div style = "float: left">
+
+<font size=4>
+*Summary of Scopes: Max and Min*
+```{r,echo=FALSE, message=FALSE, warning=FALSE}
+
+CDP<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDP<-subset(CDP,CDP$Year_Reported=='2019'& CDP$TOTAL_Scope_1_2_3!=0.00)
+scopes<-CDP %>%
+  group_by(Year_Reported,CDP_Region)%>%
+  summarise(Scope1=sum(Direct_emissions_1+Direct_emissions_2+TOTAL_Scope_1),
+            Scope2=sum(Indirect_emissions_1+TOTAL_Scope_2),Scope3=sum(Indirect_emissions_2+TOTAL_Scope_3),Outside=sum(Emissions_occurring_outside_1+Emissions_occurring_outside_2),Population=sum(Population))
+
+
+output1=scopes[which.max(scopes$Scope1),]
+output1min=scopes[which.min(scopes$Scope1),]
+output2=scopes[which.max(scopes$Scope2),]
+output2min=scopes[which.min(scopes$Scope2),]
+output3=scopes[which.max(scopes$Scope3),]
+output3min=scopes[which.min(scopes$Scope3),]
+output1max<-output1[,c(2,3)]
+outputs1min<-output1min[,c(2,3)]
+output2max<-output2[,c(2,4)]
+outputs2min<-output2min[,c(2,4)]
+output3max<-output3[,c(2,5)]
+outputs3min<-output3min[,c(2,5)]
+row.names(output1max)<-NULL
+row.names(outputs1min)<-NULL
+row.names(output2max)<-NULL
+row.names(outputs2min)<-NULL
+row.names(output3max)<-NULL
+row.names(outputs3min)<-NULL
+
+pandoc.table(output1max,justify='left')
+pandoc.table(outputs1min,justify='left')
+pandoc.table(output2max,justify='left')
+pandoc.table(outputs2min,justify='left')
+pandoc.table(output3max,justify='left')
+pandoc.table(outputs3min,justify='left')
+```
+</font>
+</div>
+
+## *3.1 Data Visualization: 2020 Emissions*
+
+<div style = "float: left">
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='700px', out.height='500px'}
+CDP<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDP<-subset(CDP,CDP$Year_Reported=='2020'& CDP$TOTAL_Scope_1_2_3!=0.00)
+scopes<-CDP %>%
+  group_by(Year_Reported,CDP_Region)%>%
+  summarise(Scope1=sum(Direct_emissions_1+Direct_emissions_2+TOTAL_Scope_1),
+            Scope2=sum(Indirect_emissions_1+TOTAL_Scope_2),Scope3=sum(Indirect_emissions_2+TOTAL_Scope_3),Outside=sum(Emissions_occurring_outside_1+Emissions_occurring_outside_2),Population=sum(Population))
+
+
+
+#scopes$CDP_Region <- as.factor(scopes$CDP_Region)
+plot_ly(scopes,x=scopes$CDP_Region,y=scopes$Scope1,name='Scope1',type='bar',marker = list(opacity=1,color = '#563FF4'))%>%
+  add_trace(y = ~Scope2,name='Scope2',marker = list(opacity=0.8,color = 'orange')) %>%
+  add_trace(y = ~Scope3,name='Scope3',marker = list(opacity=0.8,color = 'white')) %>%
+  layout(barmode='stack',font=list(color='#ffffff'),title= "Scope Emissions per Region 2020",
+         yaxis=list(title = "Emissions in tonne",color = '#ffffff', gridcolor='#000000'),xaxis=list(color = '#ffffff'),paper_bgcolor='#000000',  plot_bgcolor="#000000")
+                
+
+```
+</div>
+<font size=4>
+<div style = "float: right">
+*Summary of Scopes: Max and Min*
+```{r,echo=FALSE, message=FALSE, warning=FALSE}
+
+CDP<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDP<-subset(CDP,CDP$Year_Reported=='2020'& CDP$TOTAL_Scope_1_2_3!=0.00)
+scopes<-CDP %>%
+  group_by(Year_Reported,CDP_Region)%>%
+  summarise(Scope1=sum(Direct_emissions_1+Direct_emissions_2+TOTAL_Scope_1),
+            Scope2=sum(Indirect_emissions_1+TOTAL_Scope_2),Scope3=sum(Indirect_emissions_2+TOTAL_Scope_3),Outside=sum(Emissions_occurring_outside_1+Emissions_occurring_outside_2),Population=sum(Population))
+
+
+output1=scopes[which.max(scopes$Scope1),]
+output1min=scopes[which.min(scopes$Scope1),]
+output2=scopes[which.max(scopes$Scope2),]
+output2min=scopes[which.min(scopes$Scope2),]
+output3=scopes[which.max(scopes$Scope3),]
+output3min=scopes[which.min(scopes$Scope3),]
+output1max<-output1[,c(2,3)]
+outputs1min<-output1min[,c(2,3)]
+output2max<-output2[,c(2,4)]
+outputs2min<-output2min[,c(2,4)]
+output3max<-output3[,c(2,5)]
+outputs3min<-output3min[,c(2,5)]
+row.names(output1max)<-NULL
+row.names(outputs1min)<-NULL
+row.names(output2max)<-NULL
+row.names(outputs2min)<-NULL
+row.names(output3max)<-NULL
+row.names(outputs3min)<-NULL
+
+pandoc.table(output1max,justify='left')
+pandoc.table(outputs1min,justify='left')
+pandoc.table(output2max,justify='left')
+pandoc.table(outputs2min,justify='left')
+pandoc.table(output3max,justify='left')
+pandoc.table(outputs3min,justify='left')
+```
+</font>
+</div>
+
+
+## *3.2 Data Visualization: 2021 Emissions*
+
+
+<div style = "float: left">
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='700px', out.height='500px'}
+CDP<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDP<-subset(CDP,CDP$Year_Reported=='2021'& CDP$TOTAL_Scope_1_2_3!=0.00)
+scopes<-CDP %>%
+  group_by(Year_Reported,CDP_Region)%>%
+  summarise(Scope1=sum(Direct_emissions_1+Direct_emissions_2+TOTAL_Scope_1),
+            Scope2=sum(Indirect_emissions_1+TOTAL_Scope_2),Scope3=sum(Indirect_emissions_2+TOTAL_Scope_3),Outside=sum(Emissions_occurring_outside_1+Emissions_occurring_outside_2),Population=sum(Population))
+
+
+
+#scopes$CDP_Region <- as.factor(scopes$CDP_Region)
+plot_ly(scopes,x=scopes$CDP_Region,y=scopes$Scope1,name='Scope1',type='bar',marker = list(opacity=1,color = '#563FF4'))%>%
+  add_trace(y = ~Scope2,name='Scope2',marker = list(opacity=0.8,color = 'orange')) %>%
+  add_trace(y = ~Scope3,name='Scope3',marker = list(opacity=0.8,color = 'white')) %>%
+  layout(barmode='stack',font=list(color='#ffffff'),title= "Scope Emissions per Region 2021",
+         yaxis=list(title = "Emissions in tonne",color = '#ffffff', gridcolor='#000000'),xaxis=list(color = '#ffffff'),paper_bgcolor='#000000',  plot_bgcolor="#000000")
+                
+
+```
+</div>
+<font size=4>
+<div style = "float: right">
+*Summary of Scopes: Max and Min*
+```{r,echo=FALSE, message=FALSE, warning=FALSE}
+
+CDP<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDP<-subset(CDP,CDP$Year_Reported=='2021'& CDP$TOTAL_Scope_1_2_3!=0.00)
+scopes<-CDP %>%
+  group_by(Year_Reported,CDP_Region)%>%
+  summarise(Scope1=sum(Direct_emissions_1+Direct_emissions_2+TOTAL_Scope_1),
+            Scope2=sum(Indirect_emissions_1+TOTAL_Scope_2),Scope3=sum(Indirect_emissions_2+TOTAL_Scope_3),Outside=sum(Emissions_occurring_outside_1+Emissions_occurring_outside_2),Population=sum(Population))
+
+
+output1=scopes[which.max(scopes$Scope1),]
+output1min=scopes[which.min(scopes$Scope1),]
+output2=scopes[which.max(scopes$Scope2),]
+output2min=scopes[which.min(scopes$Scope2),]
+output3=scopes[which.max(scopes$Scope3),]
+output3min=scopes[which.min(scopes$Scope3),]
+output1max<-output1[,c(2,3)]
+outputs1min<-output1min[,c(2,3)]
+output2max<-output2[,c(2,4)]
+outputs2min<-output2min[,c(2,4)]
+output3max<-output3[,c(2,5)]
+outputs3min<-output3min[,c(2,5)]
+row.names(output1max)<-NULL
+row.names(outputs1min)<-NULL
+row.names(output2max)<-NULL
+row.names(outputs2min)<-NULL
+row.names(output3max)<-NULL
+row.names(outputs3min)<-NULL
+
+pandoc.table(output1max,justify='left')
+pandoc.table(outputs1min,justify='left')
+pandoc.table(output2max,justify='left')
+pandoc.table(outputs2min,justify='left')
+pandoc.table(output3max,justify='left')
+pandoc.table(outputs3min,justify='left')
+```
+</font>
+</div>
+
+
+
+## *3.3 Data Visualization: Emissions Status*
+
+<br>
+
+<div style = "float: left">
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='500px'}
+
+CDP<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDP<-subset(CDP,CDP$Year_Reported=='2019'& CDP$TOTAL_Scope_1_2_3!=0.00)
+scopes<-CDP %>%
+  group_by(Year_Reported,CDP_Region,Change_in_emissions) %>%
+  summarise(Total_Emissions=sum(TOTAL_Scope_1_2_3))
+
+library(plotly)
+#scopes$CDP_Region <- as.factor(scopes$CDP_Region)
+plot_ly(scopes,x=scopes$CDP_Region,y=scopes$Total_Emissions,type='bar',color=scopes$Change_in_emissions)%>%
+  layout(barmode='stack',font=list(color='#ffffff'),title= "Status of Emissions in 2019",
+         yaxis=list(title = "Emissions in tonne",color = '#ffffff', gridcolor='#000000'),xaxis=list(color = '#ffffff'),paper_bgcolor='#000000',  plot_bgcolor="#000000")
+                
+
+```
+</div>
+
+<div style = "float: left">
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='500px'}
+
+CDP<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDP<-subset(CDP,CDP$Year_Reported=='2020'& CDP$TOTAL_Scope_1_2_3!=0.00)
+scopes<-CDP %>%
+  group_by(Year_Reported,CDP_Region,Change_in_emissions) %>%
+  summarise(Total_Emissions=sum(TOTAL_Scope_1_2_3))
+
+library(plotly)
+#scopes$CDP_Region <- as.factor(scopes$CDP_Region)
+plot_ly(scopes,x=scopes$CDP_Region,y=scopes$Total_Emissions,type='bar',color=scopes$Change_in_emissions)%>%
+  layout(barmode='stack',font=list(color='#ffffff'),title= "Status of Emissions in 2020",
+         yaxis=list(title = "Emissions in tonne",color = '#ffffff', gridcolor='#000000'),xaxis=list(color = '#ffffff'),paper_bgcolor='#000000',  plot_bgcolor="#000000")
+                
+
+```
+</div>
+
+
+<div style = "float: left">
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='500px'}
+
+CDP<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDP<-subset(CDP,CDP$Year_Reported=='2021'& CDP$TOTAL_Scope_1_2_3!=0.00)
+scopes<-CDP %>%
+  group_by(Year_Reported,CDP_Region,Change_in_emissions) %>%
+  summarise(Total_Emissions=sum(TOTAL_Scope_1_2_3))
+
+library(plotly)
+#scopes$CDP_Region <- as.factor(scopes$CDP_Region)
+plot_ly(scopes,x=scopes$CDP_Region,y=scopes$Total_Emissions,type='bar',color=scopes$Change_in_emissions)%>%
+  layout(barmode='stack',font=list(color='#ffffff'),title= "Status of Emissions in 2021",
+         yaxis=list(title = "Emissions in tonne",color = '#ffffff', gridcolor='#000000'),xaxis=list(color = '#ffffff'),paper_bgcolor='#000000',  plot_bgcolor="#000000")
+                
+
+```
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+## *3.4 Data Visualization:N.A Emissions*
+
+Emissions by city(total):
+
+<div style = "float: left"> 
+
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+#1
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+America<-subset(Newob2,Newob2$CDP_Region=='North America'& Newob2$Year_Reported=='2019'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+colourCount = length(unique(America$City))
+Newpal = colorRampPalette(brewer.pal(9, "PuBu"))
+
+df1 <- America
+df1 <- df1 %>% group_by(America$City)
+fig1 <- df1 %>% plot_ly(labels =  ~America$City, values =~America$TOTAL_Scope_1_2_3,textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig1 <- fig1 %>% add_pie(hole = 0.4, title='North America 
+  2019')
+fig1 <- fig1 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+fig1
+
+```
+
+</div>
+
+<div style = "float: left"> 
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+America2<-subset(Newob2,Newob2$CDP_Region=='North America'& Newob2$Year_Reported=='2020'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+
+colourCount = length(unique(America2$City))
+Newpal = colorRampPalette(brewer.pal(9, "PuBu"))
+
+df2 <- America2
+df2 <- df2 %>% group_by(America2$City)
+fig2 <- df2 %>% plot_ly(labels =  ~America2$City, values =~America2$TOTAL_Scope_1_2_3, textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig2 <- fig2 %>% add_pie(hole = 0.4, title=' North America 
+  2020')
+fig2 <- fig2 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+fig2
+
+```
+
+</div>
+
+ 
+<div style = "float: left"> 
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+#1
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+#3
+
+America3<-subset(Newob2,Newob2$CDP_Region=='North America'& Newob2$Year_Reported=='2021'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+
+colourCount = length(unique(America3$City))
+Newpal = colorRampPalette(brewer.pal(9, "PuBu"))
+
+df3 <- America3
+df3 <- df3 %>% group_by(America3$City)
+fig3 <- df3 %>% plot_ly(labels =  ~America3$City, values =~America3$TOTAL_Scope_1_2_3,textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig3 <- fig3 %>% add_pie(hole = 0.4, title='North America 
+  2021')
+fig3 <- fig3 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+
+fig3
+
+
+```
+
+</div>
+
+<font size='3'>
+
+
+<div style = "float: left">
+*Summary of 2019:Max,Min,Avrg*
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  
+```{r,echo=FALSE}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+America<-subset(Newob2,Newob2$CDP_Region=='North America'& Newob2$Year_Reported=='2019'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=America[which.max(America$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=America[which.min(America$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(America$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='left')
+pandoc.table(outputmin,justify='left')
+pandoc.table(output3,justify='left')
+```
+
+
+</div>
+
+
+<div style = "float: left">
+*Summary of 2020:Max,Min,Avrg*
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;   
+```{r,echo=FALSE,fig.align='left'}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+America2<-subset(Newob2,Newob2$CDP_Region=='North America'& Newob2$Year_Reported=='2020'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=America2[which.max(America2$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=America2[which.min(America2$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(America2$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='center')
+pandoc.table(outputmin,justify='center')
+pandoc.table(output3,justify='center')
+```
+
+
+</div>
+
+
+
+*Summary of 2021:Max,Min,Avrg*
+
+```{r,echo=FALSE}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+America3<-subset(Newob2,Newob2$CDP_Region=='North America'& Newob2$Year_Reported=='2021'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=America3[which.max(America3$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=America3[which.min(America3$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(America3$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='right')
+pandoc.table(outputmin,justify='right')
+pandoc.table(output3,justify='right')
+```
+
+</font>
+
+
+
+
+ 
+
+## *3.5 Data Visualization:S.A Emissions*
+
+Emissions by city(total):
+
+<div style = "float: left"> 
+
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+#1
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+LAmerica<-subset(Newob2,Newob2$CDP_Region=='Latin America'& Newob2$Year_Reported=='2019'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+colourCount = length(unique(LAmerica$City))
+Newpal = colorRampPalette(brewer.pal(9, "RdBu"))
+
+df1 <- LAmerica
+df1 <- df1 %>% group_by(LAmerica$City)
+fig1 <- df1 %>% plot_ly(labels =  ~LAmerica$City, values =~LAmerica$TOTAL_Scope_1_2_3,textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig1 <- fig1 %>% add_pie(hole = 0.4, title='Latin America 
+  2019')
+fig1 <- fig1 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+fig1
+
+```
+
+</div>
+
+<div style = "float: left"> 
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+LAmerica2<-subset(Newob2,Newob2$CDP_Region=='Latin America'& Newob2$Year_Reported=='2020'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+
+colourCount = length(unique(LAmerica2$City))
+Newpal = colorRampPalette(brewer.pal(9, "RdBu"))
+
+df2 <- LAmerica2
+df2 <- df2 %>% group_by(LAmerica2$City)
+fig2 <- df2 %>% plot_ly(labels =  ~LAmerica2$City, values =~LAmerica2$TOTAL_Scope_1_2_3, textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig2 <- fig2 %>% add_pie(hole = 0.4, title=' Latin America 
+  2020')
+fig2 <- fig2 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+fig2
+
+```
+
+</div>
+
+ 
+<div style = "float: left"> 
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+#1
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+#3
+
+LAmerica3<-subset(Newob2,Newob2$CDP_Region=='Latin America'& Newob2$Year_Reported=='2021'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+
+colourCount = length(unique(LAmerica3$City))
+Newpal = colorRampPalette(brewer.pal(9, "RdBu"))
+
+df3 <- LAmerica3
+df3 <- df3 %>% group_by(LAmerica3$City)
+fig3 <- df3 %>% plot_ly(labels =  ~LAmerica3$City, values =~LAmerica3$TOTAL_Scope_1_2_3,textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig3 <- fig3 %>% add_pie(hole = 0.4, title='Latin America 
+  2021')
+fig3 <- fig3 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+
+fig3
+
+
+```
+
+</div>
+
+<font size='3'>
+
+
+<div style = "float: left">
+*Summary of 2019:Max,Min,Avrg*
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  
+```{r,echo=FALSE}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+LAmerica<-subset(Newob2,Newob2$CDP_Region=='Latin America'& Newob2$Year_Reported=='2019'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=LAmerica[which.max(LAmerica$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=LAmerica[which.min(LAmerica$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(LAmerica$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='left')
+pandoc.table(outputmin,justify='left')
+pandoc.table(output3,justify='left')
+```
+
+
+</div>
+
+
+<div style = "float: left">
+*Summary of 2020:Max,Min,Avrg*
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;   
+```{r,echo=FALSE,fig.align='left'}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+LAmerica2<-subset(Newob2,Newob2$CDP_Region=='Latin America'& Newob2$Year_Reported=='2020'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=LAmerica2[which.max(LAmerica2$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=LAmerica2[which.min(LAmerica2$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(LAmerica2$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='center')
+pandoc.table(outputmin,justify='center')
+pandoc.table(output3,justify='center')
+```
+
+
+</div>
+
+
+
+*Summary of 2021:Max,Min,Avrg*
+
+```{r,echo=FALSE}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+LAmerica3<-subset(Newob2,Newob2$CDP_Region=='Latin America'& Newob2$Year_Reported=='2021'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=LAmerica3[which.max(LAmerica3$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=LAmerica3[which.min(LAmerica3$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(LAmerica3$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='right')
+pandoc.table(outputmin,justify='right')
+pandoc.table(output3,justify='right')
+```
+
+
+
+</font>
+
+
+
+ 
+  
+
+
+## *3.6 Data Visualization:Europe Emissions*
+
+Emissions by city(total):
+
+<div style = "float: left"> 
+
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+#1
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+Europe<-subset(Newob2,Newob2$CDP_Region=='Europe'& Newob2$Year_Reported=='2019'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+colourCount = length(unique(Europe$City))
+Newpal = colorRampPalette(brewer.pal(9, "PiYG"))
+
+df1 <- Europe
+df1 <- df1 %>% group_by(Europe$City)
+fig1 <- df1 %>% plot_ly(labels =  ~Europe$City, values =~Europe$TOTAL_Scope_1_2_3,textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig1 <- fig1 %>% add_pie(hole = 0.4, title='Europe 
+  2019')
+fig1 <- fig1 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+fig1
+
+```
+
+</div>
+
+<div style = "float: left"> 
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+Europe<-subset(Newob2,Newob2$CDP_Region=='Europe'& Newob2$Year_Reported=='2020'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+
+colourCount = length(unique(Europe$City))
+Newpal = colorRampPalette(brewer.pal(9, "PiYG"))
+
+df2 <- Europe
+df2 <- df2 %>% group_by(Europe$City)
+fig2 <- df2 %>% plot_ly(labels =  ~Europe$City, values =~Europe$TOTAL_Scope_1_2_3, textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig2 <- fig2 %>% add_pie(hole = 0.4, title=' Europe 
+  2020')
+fig2 <- fig2 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+fig2
+
+```
+
+</div>
+
+ 
+<div style = "float: left"> 
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+#1
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+#3
+
+Europe<-subset(Newob2,Newob2$CDP_Region=='Europe'& Newob2$Year_Reported=='2021'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+
+colourCount = length(unique(Europe$City))
+Newpal = colorRampPalette(brewer.pal(9, "PiYG"))
+
+df3 <- Europe
+df3 <- df3 %>% group_by(Europe$City)
+fig3 <- df3 %>% plot_ly(labels =  ~Europe$City, values =~Europe$TOTAL_Scope_1_2_3,textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig3 <- fig3 %>% add_pie(hole = 0.4, title='Europe 
+  2021')
+fig3 <- fig3 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+
+fig3
+
+
+```
+
+</div>
+
+<font size='3'>
+
+
+<div style = "float: left">
+*Summary of 2019:Max,Min,Avrg*
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  
+```{r,echo=FALSE}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+Europe<-subset(Newob2,Newob2$CDP_Region=='Europe'& Newob2$Year_Reported=='2019'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=Europe[which.max(Europe$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=Europe[which.min(Europe$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(Europe$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='left')
+pandoc.table(outputmin,justify='left')
+pandoc.table(output3,justify='left')
+```
+
+
+</div>
+
+
+<div style = "float: left">
+*Summary of 2020:Max,Min,Avrg*
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;   
+```{r,echo=FALSE,fig.align='left'}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+Europe<-subset(Newob2,Newob2$CDP_Region=='Europe'& Newob2$Year_Reported=='2020'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=Europe[which.max(Europe$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=Europe[which.min(Europe$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(Europe$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='center')
+pandoc.table(outputmin,justify='center')
+pandoc.table(output3,justify='center')
+```
+
+
+</div>
+
+
+
+*Summary of 2021:Max,Min,Avrg*
+
+```{r,echo=FALSE}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+Europe<-subset(Newob2,Newob2$CDP_Region=='Europe'& Newob2$Year_Reported=='2021'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=Europe[which.max(Europe$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=Europe[which.min(Europe$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(Europe$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='right')
+pandoc.table(outputmin,justify='right')
+pandoc.table(output3,justify='right')
+```
+
+
+
+</font>
+
+
+
+
+
+
+
+
+## *3.7 Data Visualization:Africa Emissions*
+
+Emissions by city(total):
+
+<div style = "float: left"> 
+
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+#1
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+Africa<-subset(Newob2,Newob2$CDP_Region=='Africa'& Newob2$Year_Reported=='2019'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+colourCount = length(unique(Africa$City))
+Newpal = colorRampPalette(brewer.pal(9, "BuGn"))
+
+df1 <- Africa
+df1 <- df1 %>% group_by(Africa$City)
+fig1 <- df1 %>% plot_ly(labels =  ~Africa$City, values =~Africa$TOTAL_Scope_1_2_3,textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig1 <- fig1 %>% add_pie(hole = 0.4, title='Africa 
+  2019')
+fig1 <- fig1 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+fig1
+
+```
+
+</div>
+
+<div style = "float: left"> 
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+Africa<-subset(Newob2,Newob2$CDP_Region=='Africa'& Newob2$Year_Reported=='2020'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+
+colourCount = length(unique(Africa$City))
+Newpal = colorRampPalette(brewer.pal(9, "BuGn"))
+
+df2 <- Africa
+df2 <- df2 %>% group_by(Africa$City)
+fig2 <- df2 %>% plot_ly(labels =  ~Africa$City, values =~Africa$TOTAL_Scope_1_2_3, textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig2 <- fig2 %>% add_pie(hole = 0.4, title=' Africa 
+  2020')
+fig2 <- fig2 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+fig2
+
+```
+
+</div>
+
+ 
+<div style = "float: left"> 
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+#1
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+#3
+
+Africa<-subset(Newob2,Newob2$CDP_Region=='Africa'& Newob2$Year_Reported=='2021'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+
+colourCount = length(unique(Africa$City))
+Newpal = colorRampPalette(brewer.pal(9, "BuGn"))
+
+df3 <- Africa
+df3 <- df3 %>% group_by(Africa$City)
+fig3 <- df3 %>% plot_ly(labels =  ~Africa$City, values =~Africa$TOTAL_Scope_1_2_3,textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig3 <- fig3 %>% add_pie(hole = 0.4, title='Africa 
+  2021')
+fig3 <- fig3 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+
+fig3
+
+
+```
+
+</div>
+
+<font size='3'>
+
+
+<div style = "float: left">
+*Summary of 2019:Max,Min,Avrg*
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  
+```{r,echo=FALSE}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+Africa<-subset(Newob2,Newob2$CDP_Region=='Africa'& Newob2$Year_Reported=='2019'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=Africa[which.max(Africa$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=Africa[which.min(Africa$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(Africa$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='left')
+pandoc.table(outputmin,justify='left')
+pandoc.table(output3,justify='left')
+```
+
+
+</div>
+
+
+<div style = "float: left">
+*Summary of 2020:Max,Min,Avrg*
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;   
+```{r,echo=FALSE,fig.align='left'}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+Africa<-subset(Newob2,Newob2$CDP_Region=='Africa'& Newob2$Year_Reported=='2020'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=Africa[which.max(Africa$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=Africa[which.min(Africa$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(Africa$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='center')
+pandoc.table(outputmin,justify='center')
+pandoc.table(output3,justify='center')
+```
+
+
+</div>
+
+
+
+*Summary of 2021:Max,Min,Avrg*
+
+```{r,echo=FALSE}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+Africa<-subset(Newob2,Newob2$CDP_Region=='Africa'& Newob2$Year_Reported=='2021'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=Africa[which.max(Africa$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=Africa[which.min(Africa$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(Africa$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='right')
+pandoc.table(outputmin,justify='right')
+pandoc.table(output3,justify='right')
+```
+
+
+
+</font>
+
+
+
+
+
+
+## *3.8 Data Visualization:Middle-East Emissions*
+
+Emissions by city(total):
+
+<div style = "float: left"> 
+
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+#1
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDreg<-subset(Newob2,Newob2$CDP_Region=='Middle East'& Newob2$Year_Reported=='2019'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+colourCount = length(unique(CDreg$City))
+Newpal = colorRampPalette(brewer.pal(9, "GnBu"))
+
+df1 <- CDreg
+df1 <- df1 %>% group_by(CDreg$City)
+fig1 <- df1 %>% plot_ly(labels =  ~CDreg$City, values =~CDreg$TOTAL_Scope_1_2_3,textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig1 <- fig1 %>% add_pie(hole = 0.4, title='Middle East 
+  2019')
+fig1 <- fig1 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+fig1
+
+```
+
+</div>
+
+<div style = "float: left"> 
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+CDreg<-subset(Newob2,Newob2$CDP_Region=='Middle East'& Newob2$Year_Reported=='2020'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+
+colourCount = length(unique(CDreg$City))
+Newpal = colorRampPalette(brewer.pal(9, "GnBu"))
+
+df2 <- CDreg
+df2 <- df2 %>% group_by(CDreg$City)
+fig2 <- df2 %>% plot_ly(labels =  ~CDreg$City, values =~CDreg$TOTAL_Scope_1_2_3, textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig2 <- fig2 %>% add_pie(hole = 0.4, title=' Middle East 
+  2020')
+fig2 <- fig2 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+fig2
+
+```
+
+</div>
+
+ 
+<div style = "float: left"> 
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+
+CDreg<-subset(Newob2,Newob2$CDP_Region=='Middle East'& Newob2$Year_Reported=='2021'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+colourCount = length(unique(CDreg$City))
+Newpal = colorRampPalette(brewer.pal(9, "GnBu"))
+
+df3 <- CDreg
+df3 <- df3 %>% group_by(CDreg$City)
+fig3 <- df3 %>% plot_ly(labels =  ~CDreg$City, values =~CDreg$TOTAL_Scope_1_2_3,textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig3 <- fig3 %>% add_pie(hole = 0.4, title='Middle East 
+  2021')
+fig3 <- fig3 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+
+fig3
+
+
+```
+
+</div>
+
+<font size='3'>
+
+
+<div style = "float: left">
+*Summary of 2019:Max,Min,Avrg*
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  
+```{r,echo=FALSE}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDreg<-subset(Newob2,Newob2$CDP_Region=='Middle East'& Newob2$Year_Reported=='2019'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=CDreg[which.max(CDreg$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=CDreg[which.min(CDreg$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(CDreg$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='left')
+pandoc.table(outputmin,justify='left')
+pandoc.table(output3,justify='left')
+```
+
+
+</div>
+
+
+<div style = "float: left">
+*Summary of 2020:Max,Min,Avrg*
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;   
+```{r,echo=FALSE,fig.align='left'}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDreg<-subset(Newob2,Newob2$CDP_Region=='Middle East'& Newob2$Year_Reported=='2020'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=CDreg[which.max(CDreg$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=CDreg[which.min(CDreg$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(CDreg$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='center')
+pandoc.table(outputmin,justify='center')
+pandoc.table(output3,justify='center')
+```
+
+
+</div>
+
+
+
+*Summary of 2021:Max,Min,Avrg*
+
+```{r,echo=FALSE}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDreg<-subset(Newob2,Newob2$CDP_Region=='Middle East'& Newob2$Year_Reported=='2021'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=CDreg[which.max(CDreg$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=CDreg[which.min(CDreg$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(CDreg$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='right')
+pandoc.table(outputmin,justify='right')
+pandoc.table(output3,justify='right')
+```
+
+
+
+</font>
+
+
+
+
+
+
+
+## *3.9 Data Visualization:East Asia Emissions*
+
+Emissions by city(total):
+
+<div style = "float: left"> 
+
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+#1
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDreg<-subset(Newob2,Newob2$CDP_Region=='East Asia'& Newob2$Year_Reported=='2019'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+colourCount = length(unique(CDreg$City))
+Newpal = colorRampPalette(brewer.pal(9, "OrRd"))
+
+df1 <- CDreg
+df1 <- df1 %>% group_by(CDreg$City)
+fig1 <- df1 %>% plot_ly(labels =  ~CDreg$City, values =~CDreg$TOTAL_Scope_1_2_3,textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig1 <- fig1 %>% add_pie(hole = 0.4, title='East Asia 
+  2019')
+fig1 <- fig1 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+fig1
+
+```
+
+</div>
+
+<div style = "float: left"> 
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+CDreg<-subset(Newob2,Newob2$CDP_Region=='East Asia'& Newob2$Year_Reported=='2020'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+
+colourCount = length(unique(CDreg$City))
+Newpal = colorRampPalette(brewer.pal(9, "OrRd"))
+
+df2 <- CDreg
+df2 <- df2 %>% group_by(CDreg$City)
+fig2 <- df2 %>% plot_ly(labels =  ~CDreg$City, values =~CDreg$TOTAL_Scope_1_2_3, textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig2 <- fig2 %>% add_pie(hole = 0.4, title=' East Asia 
+  2020')
+fig2 <- fig2 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+fig2
+
+```
+
+</div>
+
+ 
+<div style = "float: left"> 
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+
+CDreg<-subset(Newob2,Newob2$CDP_Region=='East Asia'& Newob2$Year_Reported=='2021'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+colourCount = length(unique(CDreg$City))
+Newpal = colorRampPalette(brewer.pal(9, "OrRd"))
+
+df3 <- CDreg
+df3 <- df3 %>% group_by(CDreg$City)
+fig3 <- df3 %>% plot_ly(labels =  ~CDreg$City, values =~CDreg$TOTAL_Scope_1_2_3,textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig3 <- fig3 %>% add_pie(hole = 0.4, title='East Asia 
+  2021')
+fig3 <- fig3 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+
+fig3
+
+
+```
+
+</div>
+
+<font size='3'>
+
+
+<div style = "float: left">
+*Summary of 2019:Max,Min,Avrg*
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  
+```{r,echo=FALSE}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDreg<-subset(Newob2,Newob2$CDP_Region=='East Asia'& Newob2$Year_Reported=='2019'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=CDreg[which.max(CDreg$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=CDreg[which.min(CDreg$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(CDreg$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='left')
+pandoc.table(outputmin,justify='left')
+pandoc.table(output3,justify='left')
+```
+
+
+</div>
+
+
+<div style = "float: left">
+*Summary of 2020:Max,Min,Avrg*
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;   
+```{r,echo=FALSE,fig.align='left'}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDreg<-subset(Newob2,Newob2$CDP_Region=='East Asia'& Newob2$Year_Reported=='2020'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=CDreg[which.max(CDreg$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=CDreg[which.min(CDreg$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(CDreg$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='center')
+pandoc.table(outputmin,justify='center')
+pandoc.table(output3,justify='center')
+```
+
+
+</div>
+
+
+
+*Summary of 2021:Max,Min,Avrg*
+
+```{r,echo=FALSE}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDreg<-subset(Newob2,Newob2$CDP_Region=='East Asia'& Newob2$Year_Reported=='2021'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=CDreg[which.max(CDreg$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=CDreg[which.min(CDreg$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(CDreg$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='right')
+pandoc.table(outputmin,justify='right')
+pandoc.table(output3,justify='right')
+```
+
+
+
+</font>
+
+
+
+
+
+
+
+
+
+
+
+
+## *3.10 Data Visualization:South and West Asia Emissions*
+
+Emissions by city(total):
+
+<div style = "float: left"> 
+
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+#1
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDreg<-subset(Newob2,Newob2$CDP_Region=='South and West Asia'& Newob2$Year_Reported=='2019'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+colourCount = length(unique(CDreg$City))
+Newpal = colorRampPalette(brewer.pal(9, "PuBuGn"))
+
+df1 <- CDreg
+df1 <- df1 %>% group_by(CDreg$City)
+fig1 <- df1 %>% plot_ly(labels =  ~CDreg$City, values =~CDreg$TOTAL_Scope_1_2_3,textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig1 <- fig1 %>% add_pie(hole = 0.5, title='South and West Asia 
+  2019')
+fig1 <- fig1 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+fig1
+
+```
+
+</div>
+
+<div style = "float: left"> 
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+CDreg<-subset(Newob2,Newob2$CDP_Region=='South and West Asia'& Newob2$Year_Reported=='2020'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+
+colourCount = length(unique(CDreg$City))
+Newpal = colorRampPalette(brewer.pal(9, "PuBuGn"))
+
+df2 <- CDreg
+df2 <- df2 %>% group_by(CDreg$City)
+fig2 <- df2 %>% plot_ly(labels =  ~CDreg$City, values =~CDreg$TOTAL_Scope_1_2_3, textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig2 <- fig2 %>% add_pie(hole = 0.5, title='South and West Asia 
+  2020')
+fig2 <- fig2 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+fig2
+
+```
+
+</div>
+
+ 
+<div style = "float: left"> 
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+
+CDreg<-subset(Newob2,Newob2$CDP_Region=='South and West Asia'& Newob2$Year_Reported=='2021'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+colourCount = length(unique(CDreg$City))
+Newpal = colorRampPalette(brewer.pal(9, "PuBuGn"))
+
+df3 <- CDreg
+df3 <- df3 %>% group_by(CDreg$City)
+fig3 <- df3 %>% plot_ly(labels =  ~CDreg$City, values =~CDreg$TOTAL_Scope_1_2_3,textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig3 <- fig3 %>% add_pie(hole = 0.5, title='South and West Asia 
+  2021')
+fig3 <- fig3 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+
+fig3
+
+
+```
+
+</div>
+
+<font size='3'>
+
+
+<div style = "float: left">
+*Summary of 2019:Max,Min,Avrg*
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  
+```{r,echo=FALSE}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDreg<-subset(Newob2,Newob2$CDP_Region=='South and West Asia'& Newob2$Year_Reported=='2019'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=CDreg[which.max(CDreg$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=CDreg[which.min(CDreg$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(CDreg$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='left')
+pandoc.table(outputmin,justify='left')
+pandoc.table(output3,justify='left')
+```
+
+
+</div>
+
+
+<div style = "float: left">
+*Summary of 2020:Max,Min,Avrg*
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;   
+```{r,echo=FALSE,fig.align='left'}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDreg<-subset(Newob2,Newob2$CDP_Region=='South and West Asia'& Newob2$Year_Reported=='2020'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=CDreg[which.max(CDreg$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=CDreg[which.min(CDreg$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(CDreg$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='center')
+pandoc.table(outputmin,justify='center')
+pandoc.table(output3,justify='center')
+```
+
+
+</div>
+
+
+
+*Summary of 2021:Max,Min,Avrg*
+
+```{r,echo=FALSE}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDreg<-subset(Newob2,Newob2$CDP_Region=='South and West Asia'& Newob2$Year_Reported=='2021'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=CDreg[which.max(CDreg$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=CDreg[which.min(CDreg$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(CDreg$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='right')
+pandoc.table(outputmin,justify='right')
+pandoc.table(output3,justify='right')
+```
+
+
+
+</font>
+
+
+
+
+
+<font size='4'>
+
+## *3.11 Data Visualization:Southeast Asia and Oceania Emissions*
+</font>
+Emissions by city(total):
+
+<div style = "float: left"> 
+
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+#1
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDreg<-subset(Newob2,Newob2$CDP_Region=='Southeast Asia and Oceania'& Newob2$Year_Reported=='2019'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+colourCount = length(unique(CDreg$City))
+Newpal = colorRampPalette(brewer.pal(9, "Blues"))
+
+df1 <- CDreg
+df1 <- df1 %>% group_by(CDreg$City)
+fig1 <- df1 %>% plot_ly(labels =  ~CDreg$City, values =~CDreg$TOTAL_Scope_1_2_3,textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig1 <- fig1 %>% add_pie(hole = 0.5, title='Southeast Asia and Oceania 
+  2019')
+fig1 <- fig1 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+fig1
+
+```
+
+</div>
+
+<div style = "float: left"> 
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+CDreg<-subset(Newob2,Newob2$CDP_Region=='Southeast Asia and Oceania'& Newob2$Year_Reported=='2020'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+
+colourCount = length(unique(CDreg$City))
+Newpal = colorRampPalette(brewer.pal(9, "Blues"))
+
+df2 <- CDreg
+df2 <- df2 %>% group_by(CDreg$City)
+fig2 <- df2 %>% plot_ly(labels =  ~CDreg$City, values =~CDreg$TOTAL_Scope_1_2_3, textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig2 <- fig2 %>% add_pie(hole = 0.5, title='Southeast Asia and Oceania 
+  2020')
+fig2 <- fig2 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+fig2
+
+```
+
+</div>
+
+ 
+<div style = "float: left"> 
+
+```{r, echo=FALSE, message=FALSE,warning=FALSE, out.width='300px', out.height='300px'}
+
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+library(plotly)
+library(dplyr)
+library(RColorBrewer)
+
+CDreg<-subset(Newob2,Newob2$CDP_Region=='Southeast Asia and Oceania'& Newob2$Year_Reported=='2021'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+colourCount = length(unique(CDreg$City))
+Newpal = colorRampPalette(brewer.pal(9, "Blues"))
+
+df3 <- CDreg
+df3 <- df3 %>% group_by(CDreg$City)
+fig3 <- df3 %>% plot_ly(labels =  ~CDreg$City, values =~CDreg$TOTAL_Scope_1_2_3,textinfo = "none", marker=list(colors=Newpal(colourCount)))
+fig3 <- fig3 %>% add_pie(hole = 0.5, title='Southeast Asia and Oceania 
+  2021')
+fig3 <- fig3 %>% layout(title='',  showlegend = F,
+                      xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                      yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),paper_bgcolor='#000000',  plot_bgcolor="#000000",font=list(color="#ffffff"))
+
+
+fig3
+
+
+```
+
+</div>
+
+<font size='3.5'>
+
+
+<div style = "float: left">
+*Summary of 2019:Max,Min,Avrg*
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  
+```{r,echo=FALSE}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDreg<-subset(Newob2,Newob2$CDP_Region=='Southeast Asia and Oceania'& Newob2$Year_Reported=='2019'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=CDreg[which.max(CDreg$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=CDreg[which.min(CDreg$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(CDreg$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='left')
+pandoc.table(outputmin,justify='left')
+pandoc.table(output3,justify='left')
+```
+
+
+</div>
+
+
+<div style = "float: left">
+*Summary of 2020:Max,Min,Avrg*
+&nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;   
+```{r,echo=FALSE,fig.align='left'}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDreg<-subset(Newob2,Newob2$CDP_Region=='Southeast Asia and Oceania'& Newob2$Year_Reported=='2020'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=CDreg[which.max(CDreg$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=CDreg[which.min(CDreg$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(CDreg$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='center')
+pandoc.table(outputmin,justify='center')
+pandoc.table(output3,justify='center')
+```
+
+
+</div>
+
+
+
+*Summary of 2021:Max,Min,Avrg*
+
+```{r,echo=FALSE}
+Newob2<-read.csv('C:/Users/Esama/Documents/Project/Newob2.csv')
+CDreg<-subset(Newob2,Newob2$CDP_Region=='Southeast Asia and Oceania'& Newob2$Year_Reported=='2021'& Newob2$TOTAL_Scope_1_2_3!=0.00)
+
+output=CDreg[which.max(CDreg$TOTAL_Scope_1_2_3),]
+outputmax<-output[,c(4,27)]
+output2=CDreg[which.min(CDreg$TOTAL_Scope_1_2_3),]
+outputmin<-output2[,c(4,27)]
+output3=mean(CDreg$TOTAL_Scope_1_2_3)
+row.names(outputmax)<-NULL
+row.names(outputmin)<-NULL
+pandoc.table(outputmax,justify='right')
+pandoc.table(outputmin,justify='right')
+pandoc.table(output3,justify='right')
+```
+
+
+
+</font>
+
+
+# *4.Demo*
+<br>
+<br>
+<br>
+<div style = "float: center">
+<font size='8'>
+Plotly Dash Web Application
+</font>
+</div> 
